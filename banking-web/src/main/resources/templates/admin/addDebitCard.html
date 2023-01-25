@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add DebitCard </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  
+  <style>
+    .error{
+      color:red;
+      font-weight: bold;
+      font-size: 18px;
+  }
+  
+.ffooter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  height: 30px;
+  background-color:#e9ffe7;
+}
+</style>
+
+
+</head>
+<body>
+<header style="height: 30px;background-color: maroon;">
+</header>
+<div class="container">
+  <h2>Add New DebitCard</h2>
+  
+   <img src="  https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEOga1BuuQ_qW2aDOf8LmTZedXzLIaIe6KEA&usqp=CAU" alt="Logo" style="height: 120px"/>
+  <div style="width: 70%">
+  
+<span th:utext="${message}" style="color: blue;font-size: 18px;font-weight: bold;"></span>
+  
+   <form id="addDebitCardForm" th:action="@{/admin/debit/card}" method="POST"  th:object="${debitCardTypeVO}" >
+  
+    <div class="form-group">
+      <label for="name">Name: *</label>
+      <input  type="text" style="width: 40%;" class="form-control" id="name"   th:field="*{name}" placeholder="Enter name">
+      
+      
+    </div>
+  
+    <div class="form-group">
+      <label for="code">Code: *</label>
+      <input type="text" style="width: 40%;" class="form-control"  id="code"  th:field="*{code}" placeholder="Enter code">
+        
+   
+    </div>
+    <div class="form-group">
+      <label for="*{description}">Description:</label>
+      <input type="text" style="width: 60%;" th:field="*{description}"  class="form-control" placeholder="Description">
+    </div> 
+    
+    
+     <div class="form-group">
+      <label for="type">Card Type:</label>
+      <select style="width: 30%;"  class="form-control" th:field="*{type}">
+         <option value="Visa">Visa</option>
+         <option value="Master">Master</option>
+         <option value="Express">Express</option>
+         <option value="Discover">Discover</option>
+      </select>
+   
+  
+<br>
+    <button type="submit" class="btn btn-primary">Add card Type</button>
+    <a th:href="@{/customer/login}"> 
+    <button type="button" class="btn btn-danger">Login</button>
+    </a>
+  </form>
+  </div>
+</div>
+<footer  class="ffooter">
+</footer>
+
+</body>
+</html>

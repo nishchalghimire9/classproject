@@ -2,13 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Admin Dashboard Page</title>
+  <title>Login Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+  
+   
+  <script type="text/javascript">
+  $(document).ready(function() {
+	    $('#enquiryList').DataTable();
+	} );
+  </script>
   
   <style>
 .ffooter {
@@ -30,7 +39,7 @@
    
 </header>
 <div class="container">
-  <h2>Admin Dashboard Page
+  <h2>Employee Information
   </h2>
    <a th:href="@{/admin/security/questions}"> 
   <button type="button" class="btn btn-primary">Customer Security Questions</button>
@@ -81,10 +90,51 @@
 
 
 <button type="button" class="btn btn-warning">Loan Request</button>
-  <img th:src="@{/images/customer_dashboard.jpg}" alt="page"/>
+  
    <span th:utext="${error}" style="color: red;font-size: 18px;"></span>
   <div style="width: 70%">
   </div>
+
+ 
+    <table id="enquiryList" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+  <tr>
+  <td> CID </td>
+  <td> FirstName </td>
+  <td> LastName </td>
+  <td> Address </td>
+  <td> ContactNumber </td>
+  <td> email</td>
+   <td> Gender</td>
+    <td> Action </td>
+  
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="EmployeeVO: ${employeelist}">
+  	<td th:text="${EmployeeVO.cid}"/>
+  	<td th:text="${EmployeeVO.firstname}"/>
+  	<td th:text="${EmployeeVO.lastname}"/>
+  	<td th:text="${EmployeeVO.address}"/>
+  	<td th:text="${EmployeeVO.contactnumber}"/>
+  	<td th:text="${EmployeeVO.email}"/>
+  	<td th:text="${EmployeeVO.gender}"/>
+  	
+  	 <td> 
+  	 <a th:href="@{'/admin/editEmployeeInfo?id=' +${EmployeeVO.cid}}"> 
+  	<button type="button" class= "btn btn-warning"> Edit</button>
+ 	</a>
+  	<a th:href="@{'/admin/deleteEmployeeInfo?id=' +${EmployeeVO.cid}}">  <!--  delete by firstname here name can be given any thing  -->
+  	 <button type="button" class= "btn btn-danger"> Delete</button>
+  	 </a>
+  	  	&nbsp;&nbsp;
+  	</td>
+  	
+  </tr>
+  </tbody>
+  </table>
+  
+ 
 </div>
 <footer  class="ffooter">
 </footer>

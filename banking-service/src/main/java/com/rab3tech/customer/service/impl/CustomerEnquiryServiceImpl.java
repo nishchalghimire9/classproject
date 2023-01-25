@@ -85,7 +85,11 @@ public class CustomerEnquiryServiceImpl implements CustomerEnquiryService {
 		AccountStatus accountStatus = new AccountStatus();
 		accountStatus.setId(1);
 		entity.setStatus(accountStatus);
-
+			
+				//accountStatus.setId(1);
+//				//entity.setStatus(accountStatus);
+//				AccountStatus accountStatus=accountStatusRepository.findById(1).get();
+//				entity.setStatus(accountStatus);
 		CustomerSaving savingEntity = customerAccountEnquiryRepository.save(entity);
 
 		customerSavingVO.setCsaid(savingEntity.getCsaid());

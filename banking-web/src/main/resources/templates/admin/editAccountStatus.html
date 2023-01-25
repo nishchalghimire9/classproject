@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Account status</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  
+  <style>
+    .error{
+      color:red;
+      font-weight: bold;
+      font-size: 18px;
+  }
+  
+.ffooter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  height: 30px;
+  background-color:#e9ffe7;
+}
+</style>
+<!--  
+<script>
+
+var name="India is a country!!!";
+
+function clearError(){
+	document.getElementById("nameErrorMessage").innerHTML="";
+}
+
+  //This is JavaScript function
+  function validateForm(){
+	  console.log("Hey!!!!!!!!!!!!");
+	  var pname=document.getElementById("name").value;
+	  if(pname.length==0 || pname.length < 4){
+		  //alert("Hey name length cannot be less than 4.");
+		  document.getElementById("nameErrorMessage").innerHTML="Hey name length cannot be less than 4.";
+		  document.getElementById("name").focus();
+		  return;
+	  }
+	  
+	  var pcode=document.getElementById("code").value;
+	  if(pcode.length==0 || pcode.length < 4){
+		  //alert("Hey name length cannot be less than 4.");
+		  document.getElementById("codeErrorMessage").innerHTML="Hey code cannot be empty";
+		  document.getElementById("code").focus();
+		  return;
+	  }
+	  
+	  //Now submit the form using JavaScript code
+	  document.getElementById("addBranchForm").submit();
+  }
+
+
+</script>   -->
+							
+</head>
+<body>
+<header style="height: 30px;background-color: maroon;">
+</header>
+<div class="container">
+  <h2>Admin Dashboard Page
+  </h2>
+   <a th:href="@{/admin/security/questions}"> 
+  <button type="button" class="btn btn-primary">Customer Security Questions</button>
+  </a>
+<button type="button" class="btn btn-secondary">Lock/Unlock</button>
+<button type="button" class="btn btn-success">Customer Transaction</button>
+<a th:href="@{/admin/customers}">
+<button type="button" class="btn btn-danger">Customer(s)</button>
+</a>
+
+<a th:href="@{/admin/credit/card}">
+<button type="button" class="btn btn-primary">Add Credit Card Types</button>
+</a>
+
+
+
+<a th:href="@{/admin/credit/cards}">
+<button type="button" class="btn btn-primary">CreditCard Types</button>
+</a>
+
+
+<a th:href="@{/admin/debit/card}">
+<button type="button" class="btn btn-danger">Add DebitCard Types </button>
+</a>
+
+<a th:href="@{/admin/debit/cards}">
+<button type="button" class="btn btn-primary"> DebitCard Types</button>
+</a>
+
+
+
+<a th:href="@{/admin/locations}">
+<button type="button" class="btn btn-warning">Locations(s)</button>
+</a>
+
+<a th:href="@{/admin/employee/info}">
+<button type="button" class="btn btn-primary">Enter Employee Info(s)</button>
+</a>
+
+<a th:href="@{/admin/employee/infolist}">
+<button type="button" class="btn btn-primary"> Employee List</button>
+</a>
+
+<a th:href="@{/admin/account/status}">
+<button type="button" class="btn btn-success"> A/C Status</button>
+</a>
+
+
+
+<button type="button" class="btn btn-warning">Loan Request</button>
+ 
+   <span th:utext="${error}" style="color: red;font-size: 18px;"></span>
+  <div style="width: 70%">
+  </div>
+</div>
+<div class="container">
+  <h2>Edit Account Status
+  </h2>
+  <img id = "editimage" th:src="@{/images/customer-en.png}" alt="Logo" style="height: 120px"/>
+  <div style="width: 70%">
+  
+   <form id="editaccountstatusform" th:action="@{/admin/editAccountStatus}" method="POST"  th:object="${accountStatusVO}" >
+  <input  type="hidden"  th:field="*{id}">
+    <div class="form-group">
+      <label for="name">Name: *</label>
+      <input onkeypress = "clearNameErrorMessage();" onclick="changecolor();"  type="text" style="width: 60%;" class="form-control" id="name"   th:field="*{name}" placeholder="Enter name">
+      <span id="nameErrorMessage" style="color:red;font-size: 16px;font-weight: bold;"></span>
+      
+    </div>
+  
+    <div class="form-group">
+      <label for="code">Code: *</label>
+      <input onkeypress ="clearCodeErrorMessage();"type="text" class="form-control"  id="code"  th:field="*{code}" placeholder="Enter code">
+         <span id="codeErrorMessage" style="color:red;font-size: 16px;font-weight: bold;"></span>
+   
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" style="width: 60%;" 
+      th:field="*{description}"  class="form-control" placeholder="Description">
+    </div>
+    
+    <button type="button" class="btn btn-primary" onclick="validatedata();"> Update Account Status</button>
+    <a th:href="@{/customer/login}"> 
+    <button type="button" class="btn btn-danger">Login</button>
+    </a>
+    
+    <button type="button" class="btn btn-success" onclick="changeImage();">change Image</button>
+    
+    
+  </form>
+  </div>
+</div>
+<footer  class="ffooter">
+</footer>
+
+<script> 
+
+	function clearNameErrorMessage(){
+		let nameErrormessageSpan =document.getElementById("nameErrorMessage")
+		nameErrormessageSpan.innerHTML="";
+	}
+	function clearCodeErrorMessage(){
+		let codeErrormessageSpan =document.getElementById("codeErrorMessage")
+		codeErrormessageSpan.innerHTML="";
+	}
+
+	function validatedata(){
+		let nameTextobj=document.getElementById("name");
+		let nameValue =nameTextobj.value;
+		if(nameValue.length==0){
+			let nameErrormessageSpan =document.getElementById("nameErrorMessage");
+			nameErrormessageSpan.innerHTML="Name cannot be blank";
+			document.getElementById("name").focus();
+			return;
+		}
+	
+		let codeTextobj=document.getElementById("code");
+		let codeValue =codeTextobj.value;
+		if(codeValue.length==0){
+			let codeErrormessageSpan =document.getElementById("codeErrorMessage");
+			codeErrormessageSpan.innerHTML="code cannot be blank";
+			document.getElementById("code").focus();
+			return; // it is saying if error come return  
+		}
+		// submitting the form by using java script 
+		document.getElementById("editaccountstatusform").submit();
+	}
+
+	function changeImage(){
+		let editImageObj=document.getElementById("editimage");
+		editImageObj.src="https://img.freepik.com/free-psd/google-icon-isolated-3d-render-illustration_47987-9777.jpg?w=2000";
+	}
+		
+	function changecolor(){
+		let nameTextobj=document.getElementById("name");
+		nameTextobj.style.backgroundColor = "yellow";
+	}
+	
+	
+	// i have added this to see in the browser console.
+	let result = add(5,3);
+	console.log(`final result is ${result}`);
+	
+	function add(num1,num2){
+		let sum = num1+num2;
+		return sum;
+	}
+	
+	// anonymous function; a function with out a name;
+	
+	var plus= function(num1,num2){ // this is anonymous function add is variable that hold function defination.
+		let sum = num1+num2;
+		return sum;
+	
+	}
+
+	// printing the method defination.
+	console.log(plus);
+	let value = plus(34, 45);
+	console.log(`result is = ${value}`);
+
+	// this is another function with callable
+
+	let print = function(msg) {
+		console.log(msg);
+
+	}
+	print("nishchal");
+
+	process("gimire", print)
+
+	process("aarav", function(msg) {
+		console.log(msg);
+	});
+
+	function process(message, callback) {
+		callback(message);
+	}
+
+	// practicing callback functions. 
+	// this is anonymous functions  example 1 
+	let substract = function(num1, num2) {
+		let temp = num1 - num2;
+		return temp;
+	}
+	
+		let subs = run(45,25,substract);
+		console.log(`value ${subs}`);
+	
+	function run(num1,num2,callback){
+		let result=callback(num1,num2);
+		return result;
+
+		
+	}
+	// this is anonymous functions  example 2
+	
+	//let multiply = function(x,y){
+		//let z = x*y;
+	//	return z;
+	//}
+	
+	let total = findvalue(9,7,(x,y)=>{
+		let z = x*y;
+		return z;
+	});
+	
+	console.log(`calculated value ${total}`);
+	
+		function findvalue(x,y,callback){
+			let answer= callback(x,y);
+			return answer;
+		}
+		
+		//Creating an object in java script.
+		
+		let customer = { }; // this is blank object.
+		// FIRST WAY OF CREATING AN OBJECT.
+		customer.name = 'NISHCHAL';
+		customer.lastname ='GHIMIRE';
+		customer.show =function(){
+			console.log("name =" + this.name);
+			console.log("lastname =" + this.lastname);
+		}
+		console.log(customer);
+		customer.show();
+
+		// Second WAY OF CREATING AN OBJECT.
+		let customer2 ={name:'nishchal', email: 'n@gmail.com',show:function() {
+			console.log("name =" +this.name);
+			console.log("email"+ this.email);
+			
+			
+		}};
+		
+		//function constructor
+		let customer3a=new customer3("aarya", 'a@gamil.com');
+		customer3.show();
+		let customer3b=new customer3("aarya", 'a@gamil.com');
+		
+		
+		function customer3(name,email){
+			this.name=name;
+			this.email =email;
+			this.show = function(){
+				console.log("name =" +this.name);
+				console.log("email"+ this.email);
+			}
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+</script> 
+
+
+</body>
+</html>
